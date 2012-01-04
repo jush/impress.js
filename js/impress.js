@@ -250,7 +250,8 @@
     
     // EVENTS
     
-    document.addEventListener("keydown", function ( event ) {
+    document.addEventListener("keydown", filterKeys, false);
+    function filterKeys( event ) {
         if ( event.keyCode == 9 || ( event.keyCode >= 32 && event.keyCode <= 34 ) || (event.keyCode >= 37 && event.keyCode <= 40) ) {
             var active = $(".step.active", impress);
             var next = active;
@@ -273,9 +274,11 @@
             
             select(next);
             
-            event.preventDefault();
+            //event.preventDefault();
+            return false;
         }
-    }, false);
+    }
+    document.filterKeys = filterKeys;
 
     document.addEventListener("click", function ( event ) {
         // event delegation with "bubbling"
