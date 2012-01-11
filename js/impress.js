@@ -324,5 +324,32 @@
     // by selecting step defined in url or first step of the presentation
     select(getElementFromUrl() || steps[0]);
 
+    steps.forEach(function ( el, idx ) {
+            el.addEventListener("click", createEditor);
+            });
+    function createEditor ( event ) {
+        // Disable click handle
+        this.removeEventListener("click", createEditor);
+        // Append the contents of the current slide with its own html to be edited
+        var ownHtml = this.innerHTML;
+        var textarea = document.createElement("textarea");
+        textarea.className = "impress_slide_content";
+        textarea.textContent = ownHtml;
+        this.appendChild(textarea);
+
+        var slide = this;
+        // Add button to save changes
+        var saveButton = document.createElement("button");
+        saveButton.textContent = "Save";
+        saveButton.addEventListener("click", function (event){
+                    saveContent(slide, textarea);
+                    },false);
+        this.appendChild(saveButton);
+        return false;
+    };
+    function saveContent(slide, textarea) {
+        slide.innerHTML = textarea.value;
+    //    slide.addEventListener("click", createEditor);
+    }
 })(document, window);
 
