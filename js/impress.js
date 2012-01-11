@@ -289,13 +289,14 @@
         // event delegation with "bubbling"
         // check if event target (or any of its parents is a link or a step)
         var target = event.target;
-        while ( (target.tagName != "A") &&
+        while ( target &&
+                (target.tagName != "A") &&
                 (!target.stepData) &&
                 (target != document.body) ) {
             target = target.parentNode;
         }
         
-        if ( target.tagName == "A" ) {
+        if ( target && target.tagName == "A" ) {
             var href = target.getAttribute("href");
             
             // if it's a link to presentation step, target this step
